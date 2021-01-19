@@ -1,0 +1,6 @@
+Bundle-Name: headless-guestbookentries-api
+Bundle-SymbolicName: com.liferay.docs.headless.guestbookentries.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.docs.headless.guestbookentries.dto.v1_0,\
+	com.liferay.docs.headless.guestbookentries.resource.v1_0

@@ -1,0 +1,9 @@
+apiDir: "../headless-guestbookentries-api/src/main/java"
+apiPackagePath: "com.liferay.docs.headless.guestbookentries"
+application:
+    baseURI: "/headless-guestbookentries"
+    className: "HeadlessGuestbookentriesApplication"
+    name: "HeadlessGuestbookentries"
+author: "dmetz"
+clientDir: "../headless-guestbookentries-client/src/main/java"
+testDir: "../headless-guestbookentries-test/src/testIntegration/java"

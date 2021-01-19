@@ -1,0 +1,3 @@
+Bundle-Name: headless-guestbookentries-impl
+Bundle-SymbolicName: com.liferay.docs.headless.guestbookentries.impl
+Bundle-Version: 1.0.0
