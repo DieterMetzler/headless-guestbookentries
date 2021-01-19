@@ -1,3 +1,58 @@
+components:
+  schemas:
+    Guestbookentry:
+      description: Contains all of the data for a single Guestbookentry.
+      properties:
+        id:
+          description: The guestbookentry internal ID.
+          type: string
+        name:
+          description: The name of the guestbookentry author.
+          type: string
+        email:
+          description: The email address of the guestbookentry author.
+          type: string
+        message:
+          description: The message of the guestbookentry.
+          type: string
+        creator:
+          $ref: "#/components/schemas/Creator"
+      type: object
+    Creator:
+      description: Represents the user account of the content's creator/author. Properties follow the [creator](https://schema.org/creator) specification.
+      properties:
+        additionalName:
+          description: The author's additional name (e.g., middle name).
+          readOnly: true
+          type: string
+        familyName:
+          description: The author's surname.
+          readOnly: true
+          type: string
+        givenName:
+          description: The author's first name.
+          readOnly: true
+          type: string
+        id:
+          description: The author's ID.
+          format: int64
+          readOnly: true
+          type: integer
+        image:
+          description: A relative URL to the author's profile image.
+          format: uri
+          readOnly: true
+          type: string
+        name:
+          description: The author's full name.
+          readOnly: true
+          type: string
+        profileURL:
+          description: A relative URL to the author's user profile.
+          format: uri
+          readOnly: true
+          type: string
+      type: object
 info:
     description: "HeadlessGuestbookentries REST API"
     license:
@@ -6,3 +61,155 @@ info:
     title: "HeadlessGuestbookentries"
     version: v1.0
 openapi: 3.0.1
+
+
+      
+paths:
+  "/guestbookentries":
+    get:
+      tags: ["Guestbookentry"]
+      description: Retrieves the list of guestbookentries. Results can be paginated, filtered, searched, and sorted.
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Guestbookentry"
+                type: array
+            application/xml:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Guestbookentry"
+                type: array
+    post:
+      tags: ["Guestbookentry"]
+      description: Create a new Guestbookentry.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Guestbookentry"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Guestbookentry"
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+  "/guestbookentries/{entryId}":
+    get:
+      tags: ["Guestbookentry"]
+      description: Retrieves the guestbookentry via its ID.
+      parameters:
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+    put:
+      tags: ["Guestbookentry"]
+      description: Replaces the Guestbookentry with the information sent in the request body. Any missing fields are deleted, unless they are required.
+      parameters:
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Guestbookentry"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Guestbookentry"
+      responses:
+        200:
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+    patch:
+      tags: ["Guestbookentry"]
+      description: Replaces the Guestbookentry with the information sent in the request body. Any missing fields are deleted, unless they are required.
+      parameters:
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Guestbookentry"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Guestbookentry"
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Guestbookentry"
+    delete:
+      tags: ["Guestbookentry"]
+      description: Deletes the Guestbookentry and returns a 204 if the operation succeeds.
+      parameters:
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: ""
+          content:
+            application/json: {}
