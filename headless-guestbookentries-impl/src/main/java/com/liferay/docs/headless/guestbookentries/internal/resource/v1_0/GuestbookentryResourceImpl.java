@@ -5,6 +5,7 @@ import com.liferay.docs.guestbook.service.GuestbookEntryService;
 import com.liferay.docs.headless.guestbookentries.dto.v1_0.Guestbookentry;
 import com.liferay.docs.headless.guestbookentries.resource.v1_0.GuestbookentryResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -67,6 +68,33 @@ public class GuestbookentryResourceImpl extends BaseGuestbookentryResourceImpl {
 					gb.getMessage(), _getServiceContext());
 
 			return _toGuestbookEntry(pge);
+			
+		} catch (Exception e) {
+			_log.error("Error creating guestbookentry: " + e.getMessage(), e);
+
+			throw e;
+		}
+	}
+	
+	@Override
+	public Guestbookentry patchGuestbookentry(@NotNull String entryId, Guestbookentry gb) throws Exception {
+		
+		if (_log.isDebugEnabled()) {
+			_log.debug("Need to patch an old guestbookentry: %s\n", gb.toString());
+		}
+
+		try {
+			long userId = 20130;
+			long guestbookId = 34225;
+			long groupId = 20124;
+			
+		  GuestbookEntry pge = _guestbookEntryService.patchGuestbookEntry(entryId,
+		      gb.getId(), userId, guestbookId, groupId, gb.getName(), gb.getEmail(), 
+		      gb.getMessage(), _getServiceContext());
+		  
+	
+		  return _toGuestbookEntry(pge);
+		  
 		} catch (Exception e) {
 			_log.error("Error creating guestbookentry: " + e.getMessage(), e);
 
